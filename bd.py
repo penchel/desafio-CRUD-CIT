@@ -25,7 +25,7 @@ def inserirponto(registro):
     try:
         ponto = pontoescavacao.PontoEscavacao(*registro)
         cursor.execute("""
-            INSERT INTO pontos_escavacao (tipo_ponto, latitude, longitude, altitude, descricao, data_catalogacao, responsavel)
+            INSERT INTO pontos_escavacao (tipo_ponto, latitude, longitude, altitude, descricao, data_catalogacao, id_responsavel)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (ponto.tipo, ponto.latitude, ponto.longitude, ponto.altitude, ponto.descricao, ponto.data_catalogacao, ponto.responsavel))
 

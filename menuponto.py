@@ -48,11 +48,15 @@ def leratributos():
             print("Formato inválido")
     tupla.append(resp)
     
-    resp = input("Responsável(is): ").strip()
-    while not resp:
-        print("Responsável(is) vazio ou nulo!")
-        resp = input("Responsável(is): ").strip()
+    
+    while True:
+        try:
+            resp = int(input("ID Responsável: "))
+            break
+        except ValueError:
+            print("Formato inválido")
     tupla.append(resp)
+
     return tupla
 
 def excluir():
@@ -68,6 +72,7 @@ def excluir():
 
 def menu():
     #atributos = (1,"Artefato",-1000,100,8000,"Esse artefato foi encontrado perto de uma nação indigena e era usado para",date(2019, 11, 23),"André")
+    
     print("\nPontos de Escavação:")
     print("1 - Listar Todos os Pontos")
     print("2 - Inserir Pontos")
@@ -100,8 +105,5 @@ def menu():
             menu()
         case 0:
             None
-
-bd.conectar()  
-menu()
 
     

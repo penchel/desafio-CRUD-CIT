@@ -37,7 +37,7 @@ def excluir():
         else: excluir()
 
 
-def menu():
+def menu(): 
     #atributos = (1,"Artefato",-1000,100,8000,"Esse artefato foi encontrado perto de uma nação indigena e era usado para",date(2019, 11, 23),"André")
     print("\nResponsáveis:")
     print("1 - Listar Todos os Responsáveis")
@@ -72,5 +72,3 @@ def menu():
         case 0:
             None
 
-bd.conectar()  
-menu()
