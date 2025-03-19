@@ -74,7 +74,7 @@ def menu():
     print("3 - Excluir Pontos")
     print("4 - Alterar Informações dos Pontos")
     print("5 - Buscar pontos")
-    print("0 - Sair\n")
+    print("0 - Voltar\n")
     opcao = int(input("Escolha sua opção: "))
     match opcao:
         case 1:
