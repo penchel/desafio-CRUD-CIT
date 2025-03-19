@@ -1,5 +1,6 @@
 import psycopg2
 import pontoescavacao
+import responsavel
 from datetime import date, datetime
 
 cursor = None
@@ -73,7 +74,7 @@ def apagarponto(id):
         cursor.execute("SELECT * FROM pontos_escavacao WHERE id = %s", (id,))
         resultado = cursor.fetchone()
         if resultado:
-            cursor.execute("DELETE FROM pontosescavacao WHERE id = %s", (id,))
+            cursor.execute("DELETE FROM pontos_escavacao WHERE id = %s", (id,))
             conn.commit()
             print(f"Ponto de escavação com ID = {id} excluído com sucesso.")
         else:
@@ -82,6 +83,51 @@ def apagarponto(id):
         conn.rollback()
         print(f"Erro ao apagar ponto com ID = {id}: {e}")
 
-def atualizaponto(id):
-    
+def atualizaponto(atributos):
+    try:
+        ponto = pontoescavacao.PontoEscavacao(*atributos)
+        cursor.execute("SELECT * FROM pontos_escavacao WHERE id = %s", (ponto.id,))
+        resultado = cursor.fetchone()
+        if resultado:
+            cursor.execute("""
+            UPDATE pontos_escavacao 
+            SET tipo_ponto = %s, latitude = %s, longitude = %s, altitude = %s, descricao = %s, data_catalogacao = %s, responsavel = %s
+            WHERE id = %s
+            """,(ponto.tipo, ponto.latitude, ponto.longitude, ponto.altitude, ponto.descricao, ponto.data_catalogacao, ponto.responsavel, ponto.id))
+            conn.commit()
+            print("Alterações salvas.")
+        else:
+            print("Não existem pontos de escavação com esse ID")
+    except Exception as e:
+        conn.rollback()
+        print(f"Erro ao atualizar ponto")
+
+def cadastrar_responsavel(registro):
+    try:
+        respon = responsavel.Responsavel(*registro)
+        cursor.execute("""
+            INSERT INTO responsavel (nome, telefone, instituicao, especialidade)
+            VALUES (%s, %s, %s, %s)
+        """, (respon.nome, respon.telefone, respon.instituicao, respon.especialidade))
+        conn.commit()
+        print("Cadastro concluído com sucesso")
+    except Exception as e:
+        conn.rollback()
+        print(f"Erro ao inserir ponto: {e}")
+
+def listar_responsavel():
+    try:
+        cursor.execute("SELECT * FROM responsavel")  
+        resultado = cursor.fetchall()
+
+        if resultado:
+            for registro in resultado:
+                ponto = responsavel.Responsavel(*registro)
+                print(ponto)
+        else:
+            print("Tabela vazia.")
+
+    except Exception as e:
+        print(f"Erro ao listar pontos: {e}")
+
     
