@@ -42,11 +42,37 @@ def leratributos():
         resp = input("Tipo de artefato: ").strip()
     tupla.append(resp)
     return tupla
+def excluir():
+    id = input("insira o id (insira 'a' para apagar todos os registros): ")
+    if id == 'a':
+        certeza = input("Tem certeza que quer apagar todos os registros? (S/N): ")
+        if certeza == 'S': conn.apagarpontos()
+        else: excluir()
+    else:
+        certeza = input("Tem certeza que quer apagar esse registro? (S/N): ")
+        if certeza == 'S': conn.apagarponto(id)
+        else: excluir()
 
-#atributos = (1,"Artefato",-1000,100,8000,"Esse artefato foi encontrado perto de uma nação indigena e era usado para",date(2019, 11, 23),"André")
-atributos = leratributos()
-atributos.insert(0,1)
-conn.conectar()
-conn.apagarpontos()
-conn.inserirponto(tuple(atributos))
-conn.listarponto()
+def menu():
+    conn.conectar()
+    #atributos = (1,"Artefato",-1000,100,8000,"Esse artefato foi encontrado perto de uma nação indigena e era usado para",date(2019, 11, 23),"André")
+    print("Pontos de Escavação:")
+    print("1 - Listar Todos os Pontos")
+    print("2 - Inserir Pontos")
+    print("3 - Excluir Pontos")
+    print("4 - Alterar Informações dos Pontos")
+    print("5 - Buscar pontos")
+    opcao = input("Escolha sua opção:")
+    match opcao:
+        case 1:
+            conn.listarponto()
+        case 2:
+            atributos = leratributos()
+            atributos.insert(0,1)
+            conn.inserirponto(tuple(atributos))
+        case 3:
+            excluir()
+    
+
+
+    
