@@ -70,6 +70,32 @@ def excluir():
         if certeza == 'S': bd.apagarponto(id)
         else: excluir()
 
+def listar():
+    print("\nQual(is) o(s) filtro(s) da consulta:")
+    ponto = input("Tipo de ponto ('Enter' para ignorar esse filtro): ").strip()
+    id_ponto = input("ID do ponto ('Enter' para ignorar este filtro): ").strip()
+    print("-- coordenadas --")
+    latitude = input("Latitude do ponto ('Enter' para ignorar este filtro): ").strip()
+    longitude = input("Longitude do ponto ('Enter' para ignorar este filtro): ").strip()
+    altitude = input("Altitude do ponto ('Enter' para ignorar este filtro): ").strip()
+    filtros = {}
+    if ponto:
+        filtros["ponto"] = ponto
+    if id_ponto:
+        filtros["id"] = int(id_ponto) 
+    if latitude:
+        filtros["latitude"] = float(latitude)
+    if longitude:
+        filtros["longitude"] = float(longitude)
+    if altitude:
+        filtros["altitude"] = float(altitude)
+
+    return filtros
+
+
+
+    
+
 def menu():
     #atributos = (1,"Artefato",-1000,100,8000,"Esse artefato foi encontrado perto de uma nação indigena e era usado para",date(2019, 11, 23),"André")
     
@@ -83,7 +109,8 @@ def menu():
     opcao = int(input("Escolha sua opção: "))
     match opcao:
         case 1:
-            bd.listarponto()
+            filtros = listar()
+            bd.listarponto(filtro=filtros)
             input("\nEnter - Voltar para o menu")
             menu()
         case 2:
