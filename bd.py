@@ -130,4 +130,34 @@ def listar_responsavel():
     except Exception as e:
         print(f"Erro ao listar pontos: {e}")
 
+def apagar_responsaveis():
+    try:
+        cursor.execute("DELETE FROM responsavel")
+        registros_apagados = cursor.rowcount
+        conn.commit()
+        if registros_apagados > 0:
+            print(f"{registros_apagados} registros apagados com sucesso.")
+        else:
+            print("A tabela já estava vazia")
+    except Exception as e:
+        print(f"Erro ao apagar os registros: {e}")
+
+def atualizar_responsaveis(atributos):
+    try:
+        respon = responsavel.Responsavel(*atributos)
+        cursor.execute("SELECT * FROM responsavel WHERE id = %s ", (respon.id,))
+        resultado = cursor.fetchone()
+        if resultado:
+            cursor.execute("""
+                UPDATE responsavel
+                SET nome = %s, telefone = %s, instituicao = %s, especialidade = %s 
+            """, (respon.nome, respon.telefone, respon.instituicao, respon.especialidade))
+            conn.commit()
+            print("Alterações salvas.")
+        else:
+            print("Não existe um responsável com esse id.")
+    except Exception as e:
+        print(f"Erro ao atualizar os responsáveis: {e}")
+
+
     
