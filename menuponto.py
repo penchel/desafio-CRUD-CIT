@@ -121,7 +121,7 @@ def menu():
     print("2 - Inserir Pontos")
     print("3 - Excluir Pontos")
     print("4 - Alterar Informações dos Pontos")
-    print("5 - Buscar por responsável")
+    print("5 - Buscar por Descrição")
     print("0 - Voltar\n")
     opcao = int(input("Escolha sua opção: "))
     match opcao:

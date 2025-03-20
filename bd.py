@@ -175,8 +175,9 @@ def atualizar_responsaveis(atributos):
         if resultado:
             cursor.execute("""
                 UPDATE responsavel
-                SET nome = %s, telefone = %s, instituicao = %s, especialidade = %s 
-            """, (respon.nome, respon.telefone, respon.instituicao, respon.especialidade))
+                SET nome = %s, telefone = %s, instituicao = %s, especialidade = %s
+                WHERE id = %s 
+            """, (respon.nome, respon.telefone, respon.instituicao, respon.especialidade, respon.id))
             conn.commit()
             print("Alterações salvas.")
         else:
