@@ -90,7 +90,21 @@ def listar():
     if altitude:
         filtros["altitude"] = float(altitude)
 
-    return filtros
+    print("\n Qual a opção de ordenação: ")
+    print("1 - Ordem de cadastro")
+    print("2 - Data de catalogação")
+    print("0 - Nenhum")
+    op = int(input("opção: "))
+    order = ""
+    match op:
+        case 1:
+            order = "id"
+    lista = []
+    lista.append(filtros)
+    lista.append(order)
+    
+
+    return lista
 
 
 
@@ -109,8 +123,12 @@ def menu():
     opcao = int(input("Escolha sua opção: "))
     match opcao:
         case 1:
-            filtros = listar()
-            bd.listarponto(filtro=filtros)
+            lista = listar()
+            filtros = lista[0]
+            order = lista[1]
+            ordem = input("Decrescente ou Crescente(d/c): ")
+            dict = {'d': True, 'c': False}
+            bd.listarponto(filtro=filtros, orderby=order, reverse=dict[ordem])
             input("\nEnter - Voltar para o menu")
             menu()
         case 2:

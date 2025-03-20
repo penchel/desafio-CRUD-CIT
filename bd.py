@@ -37,7 +37,7 @@ def inserirponto(registro):
         print(f"Erro ao inserir ponto: {e}")
 
 
-def listarponto(orderby=None, filtro=None):
+def listarponto(orderby=None, filtro=None, reverse=False):
     try:
         if filtro is None:
             filtro = {}  
@@ -47,19 +47,21 @@ def listarponto(orderby=None, filtro=None):
             condicoes = [f"{coluna} = %s" for coluna in filtro.keys()]
             sql += " WHERE " + " AND ".join(condicoes)
             parametros = tuple(filtro.values())  
-        if orderby:
-            sql += f" ORDER BY {orderby}"
+        
         if parametros:
             cursor.execute(sql, parametros)
         else:
             cursor.execute(sql)
         resultado = cursor.fetchall()
         if resultado:
-            print()
-            for registro in resultado:
-                ponto = pontoescavacao.PontoEscavacao(*registro)
-                print(ponto)
+            pontos = [pontoescavacao.PontoEscavacao(*registro) for registro in resultado]
+            if(orderby == "id"):
+                pontos.sort(key=lambda ponto: ponto.id, reverse=reverse)
+
+                
+            for ponto in pontos:
                 print()
+                print(ponto)
         else:
             print("Nenhum registro encontrado.")
 
