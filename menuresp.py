@@ -29,11 +29,11 @@ def excluir():
     id = input("insira o id (insira 'a' para apagar todos os registros): ")
     if id == 'a':
         certeza = input("Tem certeza que quer apagar todos os registros? (S/N): ")
-        if certeza == 'S': bd.apagar_responsaveis()
+        if certeza == 'S': bd.apagar_responsaveis(id)
         else: excluir()
     else:
         certeza = input("Tem certeza que quer apagar esse registro? (S/N): ")
-        if certeza == 'S': bd.apagar_responsaveis()
+        if certeza == 'S': bd.apagar_responsaveis(id)
         else: excluir()
 
 

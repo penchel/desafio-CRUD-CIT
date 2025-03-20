@@ -158,15 +158,15 @@ def listar_responsavel():
     except Exception as e:
         print(f"Erro ao listar pontos: {e}")
 
-def apagar_responsaveis():
+def apagar_responsaveis(id):
     try:
-        cursor.execute("DELETE FROM responsavel")
+        cursor.execute("DELETE FROM responsavel WHERE id = %s",(id,))
         registros_apagados = cursor.rowcount
         conn.commit()
         if registros_apagados > 0:
             print(f"{registros_apagados} registros apagados com sucesso.")
         else:
-            print("A tabela já estava vazia")
+            print("Não foi encontrado nenhum responsável com esse id")
     except Exception as e:
         print(f"Erro ao apagar os registros: {e}")
 
