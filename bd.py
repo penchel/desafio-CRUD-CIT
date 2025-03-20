@@ -63,6 +63,9 @@ def listarponto(orderby=None, filtro=None, reverse=False, responsavel = None):
                 pontos = [pontoescavacao.PontoEscavacao(*registro) for registro in resultado]
             if(orderby == "id"):
                 pontos.sort(key=lambda ponto: ponto.id, reverse=reverse)
+            if(orderby == "data_catalogacao"):
+                pontos.sort(key=lambda ponto: ponto.data_catalogacao, reverse=reverse)
+            
 
                 
             for ponto in pontos:
@@ -116,7 +119,7 @@ def atualizaponto(atributos):
         if resultado:
             cursor.execute("""
             UPDATE pontos_escavacao 
-            SET tipo_ponto = %s, latitude = %s, longitude = %s, altitude = %s, descricao = %s, data_catalogacao = %s, responsavel = %s
+            SET tipo_ponto = %s, latitude = %s, longitude = %s, altitude = %s, descricao = %s, data_catalogacao = %s, id_responsavel = %s
             WHERE id = %s
             """,(ponto.tipo, ponto.latitude, ponto.longitude, ponto.altitude, ponto.descricao, ponto.data_catalogacao, ponto.responsavel, ponto.id))
             conn.commit()
@@ -125,7 +128,7 @@ def atualizaponto(atributos):
             print("Não existem pontos de escavação com esse ID")
     except Exception as e:
         conn.rollback()
-        print(f"Erro ao atualizar ponto")
+        print(f"Erro ao atualizar ponto: {e}")
 
 def cadastrar_responsavel(registro):
     try:

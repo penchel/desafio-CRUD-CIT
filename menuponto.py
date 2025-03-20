@@ -95,13 +95,15 @@ def listar():
 
     print("\n Qual a opção de ordenação: ")
     print("1 - Ordem de cadastro")
-    print("2 - Responsável")
+    print("2 - Data de catalogação")
     print("0 - Nenhum")
     op = int(input("opção: "))
     order = ""
     match op:
         case 1:
             order = "id"
+        case 2:
+            order = "data_catalogacao"
     lista = []
     lista.append(filtros)
     lista.append(order)
