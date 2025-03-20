@@ -3,7 +3,7 @@ def menu():
     bd.conectar()
     print("\nBanco de dados CIT")
     print("1 - Pontos de Escavação")
-    print("2 - Responáveis")
+    print("2 - Responsáveis")
     print("0 - Sair\n")
     op = input("Escolha sua opção: ")
     return op

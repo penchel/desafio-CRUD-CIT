@@ -78,9 +78,10 @@ def listar():
     latitude = input("Latitude do ponto ('Enter' para ignorar este filtro): ").strip()
     longitude = input("Longitude do ponto ('Enter' para ignorar este filtro): ").strip()
     altitude = input("Altitude do ponto ('Enter' para ignorar este filtro): ").strip()
+    responsavel = input("ID do Responsável pelo ponto ('Enter' para ignorar este filtro): ").strip()
     filtros = {}
     if ponto:
-        filtros["ponto"] = ponto
+        filtros["tipo_ponto"] = ponto
     if id_ponto:
         filtros["id"] = int(id_ponto) 
     if latitude:
@@ -89,10 +90,12 @@ def listar():
         filtros["longitude"] = float(longitude)
     if altitude:
         filtros["altitude"] = float(altitude)
+    if responsavel:
+        responsavel = int(responsavel)
 
     print("\n Qual a opção de ordenação: ")
     print("1 - Ordem de cadastro")
-    print("2 - Data de catalogação")
+    print("2 - Responsável")
     print("0 - Nenhum")
     op = int(input("opção: "))
     order = ""
@@ -102,7 +105,7 @@ def listar():
     lista = []
     lista.append(filtros)
     lista.append(order)
-    
+    lista.append(responsavel)
 
     return lista
 
@@ -118,7 +121,7 @@ def menu():
     print("2 - Inserir Pontos")
     print("3 - Excluir Pontos")
     print("4 - Alterar Informações dos Pontos")
-    print("5 - Buscar pontos")
+    print("5 - Buscar por responsável")
     print("0 - Voltar\n")
     opcao = int(input("Escolha sua opção: "))
     match opcao:
@@ -126,9 +129,10 @@ def menu():
             lista = listar()
             filtros = lista[0]
             order = lista[1]
+            responsavel = lista[2]
             ordem = input("Decrescente ou Crescente(d/c): ")
             dict = {'d': True, 'c': False}
-            bd.listarponto(filtro=filtros, orderby=order, reverse=dict[ordem])
+            bd.listarponto(filtro=filtros, orderby=order, reverse=dict[ordem], responsavel=responsavel)
             input("\nEnter - Voltar para o menu")
             menu()
         case 2:

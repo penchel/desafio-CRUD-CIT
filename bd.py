@@ -37,11 +37,14 @@ def inserirponto(registro):
         print(f"Erro ao inserir ponto: {e}")
 
 
-def listarponto(orderby=None, filtro=None, reverse=False):
+def listarponto(orderby=None, filtro=None, reverse=False, responsavel = None):
     try:
         if filtro is None:
             filtro = {}  
         sql = "SELECT * FROM pontos_escavacao"
+        if responsavel:
+            sql+= " JOIN responsavel ON pontos_escavacao.id_responsavel = responsavel.id"
+            filtro['id_responsavel'] = responsavel
         parametros = ()  
         if filtro:  
             condicoes = [f"{coluna} = %s" for coluna in filtro.keys()]
@@ -54,7 +57,10 @@ def listarponto(orderby=None, filtro=None, reverse=False):
             cursor.execute(sql)
         resultado = cursor.fetchall()
         if resultado:
-            pontos = [pontoescavacao.PontoEscavacao(*registro) for registro in resultado]
+            if responsavel:
+                pontos = [pontoescavacao.PontoEscavacao(*registro[:-5]) for registro in resultado]
+            else:
+                pontos = [pontoescavacao.PontoEscavacao(*registro) for registro in resultado]
             if(orderby == "id"):
                 pontos.sort(key=lambda ponto: ponto.id, reverse=reverse)
 
